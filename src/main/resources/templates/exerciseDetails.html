@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous"></script>
+<title>Workout Record</title>
+</head>
+<body style="background-color: rgb(40, 40, 40); font-size:200%;" class="text-white">
+	<ul style="background-color: black;" class="nav">
+		<li class="nav-item"><a class="nav-link active"
+			th:href="@{/workouts}">Workouts</a></li>
+		<li class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a>
+		</li>
+	</ul>
+	<div class="container-fluid">
+		<div align="center">
+			<h1>Workout Records</h1>
+			<br /> 
+			<br />
+			<table border="1" cellpadding="10" class="table table-dark">
+				<thead>
+					<tr>
+						<th>Exercise ID</th>
+						<th>Exercise Name</th>
+						<th>Add Exercise Record</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:object="${exercise}">
+						<td th:text="${exercise.exerciseId}">Exercise ID</td>
+						<td th:text="${exercise.exerciseName}">Exercise Name</td>
+						<td><a
+							th:href="@{/addExerciseDetails/{id}(id=${exercise.exerciseId})}"><p>Add
+									Exercise Record</p></a></td>
+					</tr>
+				</tbody>
+			</table>
+			<br>
+			<a class="float-right btn btn-primary btn-lg" th:href="@{../workoutDetails/{id}(id=${exercise.workout.workoutId})}">Back</a>
+			<br>
+			<h1>Exercise Stats</h1>
+			<br>
+			<table border="1" cellpadding="10" class="table table-dark">
+				<thead>
+					<tr>
+						<th>Date</th>
+						<th>Sets</th>
+						<th>Reps</th>
+						<th>Weight</th>
+						<th>Delete Exercise Record</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="exerciseRecord : ${exerciseRecordList}">
+						<td th:text="${exerciseRecord.date}">Date</td>
+						<td th:text="${exerciseRecord.sets}">Exercise Sets</td>
+						<td th:text="${exerciseRecord.reps}">Exercise Reps</td>
+						<td th:text="${exerciseRecord.weight}">Exercise Weight</td>
+						<td><a
+							th:href="@{/deleteExerciseRecord/{exerciseId}/{exerciseRecordId}(exerciseId=${exercise.exerciseId},exerciseRecordId=${exerciseRecord.id})}"><p>Delete
+									Exercise Record</p></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

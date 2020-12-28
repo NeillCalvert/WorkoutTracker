@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous"></script>
+<title>New Exercise</title>
+</head>
+<body style="background-color: rgb(40, 40, 40); font-size:200%;" class="text-white">
+	<ul style="background-color: black;" class="nav">
+		<li class="nav-item"><a class="nav-link active"
+			th:href="@{/workouts}">Workouts</a></li>
+		<li class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a>
+		</li>
+	</ul>
+	<div class="container-fluid">
+		<div align="center">
+			<h1>Enter New Exercise</h1>
+			<br />
+			<form action="#"
+				th:action="@{/saveExercise/{id}(id=${workout.workoutId})}"
+				th:object="${exercise}" method="post">
+
+				<table border="0" cellpadding="10">
+					<tr>
+						<td>Exercise Name:</td>
+						<td th:object="${workout}"><input type="text"
+							th:field="${exercise.exerciseName}" /></td>
+					</tr>
+					<tr>
+						<td colspan="2"><button class="btn btn-primary btn-lg" type="submit">Save</button></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

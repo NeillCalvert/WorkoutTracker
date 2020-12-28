@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous"></script>
+<title>New Workout</title>
+</head>
+<body style="background-color: rgb(40, 40, 40); font-size:200%;" class="text-white">
+	<ul style="background-color: black;" class="nav">
+		<li class="nav-item"><a class="nav-link active"
+			th:href="@{/workouts}">Workouts</a></li>
+		<li class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a>
+		</li>
+	</ul>
+	<div class="container-fluid">
+		<div align="center">
+			<h1>Enter New Workout</h1>
+			<br />
+			<form class="text-left" action="#"
+				th:action="@{/saveExerciseDetails/{id}(id=${exercise.exerciseId})}"
+				th:object="${exerciseRecord}" method="post">
+					 <p th:object="${exercise}"></p>
+						<p>Workout Sets:
+						<input type="number" th:field="${exerciseRecord.sets}" /></p>
+						<br>
+						<p>Workout Reps:
+						<input type="number" th:field="${exerciseRecord.reps}" /></p>
+						<br>
+						<p>Workout Weight:
+						<input type="number" step=".01"
+							th:field="${exerciseRecord.weight}" /></p>
+						<br>
+						<button class="btn btn-primary btn-lg" style="float:right;" type="submit">Save</button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
