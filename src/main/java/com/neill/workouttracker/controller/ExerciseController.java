@@ -6,6 +6,8 @@ package com.neill.workouttracker.controller;
 import java.sql.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,18 +45,18 @@ public class ExerciseController {
 	}
 	
 	@RequestMapping("/addExercise/{id}")
-	public String addExercise(@PathVariable("id") long id, Model model){
-		Workout workout = workoutService.getWorkoutById(id);
+	public String addExercise(@PathVariable("id") long id, Model model, HttpServletRequest request){
+		Workout workout = workoutService.getWorkoutById(id, request);
 		Exercise exercise = new Exercise();
-		
+
 		model.addAttribute("workout", workout);
 		model.addAttribute("exercise", exercise);
 		return "addExercise";
 	}
 	
 	@RequestMapping("/saveExercise/{id}")
-	public String saveExercise(@PathVariable("id") long id, Exercise exercise) {
-		Workout workout = workoutService.getWorkoutById(id);
+	public String saveExercise(@PathVariable("id") long id, Exercise exercise, HttpServletRequest request) {
+		Workout workout = workoutService.getWorkoutById(id, request);
 		
 		exercise.setWorkout(workout);
 		exerciseService.addNewExercise(exercise);
@@ -62,15 +64,15 @@ public class ExerciseController {
 	}
 	
 	@RequestMapping("/deleteExercise/{workoutId}/{exerciseId}")
-	public String deleteExercise(@PathVariable("workoutId")long workoutId, @PathVariable("exerciseId")long exerciseId) {		
-		exerciseService.deleteExercise(exerciseId);
+	public String deleteExercise(@PathVariable("workoutId")long workoutId, @PathVariable("exerciseId")long exerciseId, HttpServletRequest request) {		
+		exerciseService.deleteExercise(exerciseId, request);
 		return "redirect:../../workoutDetails/" + workoutId;
 	}
 	
 	@RequestMapping("/exerciseDetails/{id}")
-	public String getExerciseDetails(@PathVariable("id") long id, Model model) {
-		Exercise exercise = exerciseService.getExerciseById(id);
-		List<ExerciseRecord> exerciseRecords = exerciseRecordService.getAllExerciseRecordByExercise(id);
+	public String getExerciseDetails(@PathVariable("id") long id, Model model, HttpServletRequest request) {
+		Exercise exercise = exerciseService.getExerciseById(id,request);
+		List<ExerciseRecord> exerciseRecords = exerciseRecordService.getAllExerciseRecordsByExercise(id, request);
 		
 		model.addAttribute("exercise", exercise);
 		model.addAttribute("exerciseRecordList", exerciseRecords);
@@ -78,8 +80,8 @@ public class ExerciseController {
 	}
 	
 	@RequestMapping("/addExerciseDetails/{id}")
-	public String addExerciseRecord(@PathVariable("id") long id, Model model){
-		Exercise exercise = exerciseService.getExerciseById(id);
+	public String addExerciseRecord(@PathVariable("id") long id, Model model, HttpServletRequest request){
+		Exercise exercise = exerciseService.getExerciseById(id, request);
 		ExerciseRecord exerciseRecord = new ExerciseRecord();
 		
 		model.addAttribute("exercise", exercise);
@@ -88,8 +90,8 @@ public class ExerciseController {
 	}
 	
 	@RequestMapping("/saveExerciseDetails/{id}")
-	public String saveExerciseDetails(@PathVariable("id") long id, ExerciseRecord exerciseRecord) {
-		Exercise exercise = exerciseService.getExerciseById(id);
+	public String saveExerciseDetails(@PathVariable("id") long id, ExerciseRecord exerciseRecord, HttpServletRequest request) {
+		Exercise exercise = exerciseService.getExerciseById(id, request);
 		java.util.Date javaDate = new java.util.Date();
 		Date date = new Date(javaDate.getTime());
 		
@@ -101,8 +103,8 @@ public class ExerciseController {
 	}
 	
 	@RequestMapping("/deleteExerciseRecord/{exerciseId}/{exerciseRecordId}")
-	public String deleteExerciseDetails(@PathVariable("exerciseId")long exerciseId, @PathVariable("exerciseRecordId")long exerciseRecordId) {
-		exerciseRecordService.deleteExerciseRecordById(exerciseRecordId);
+	public String deleteExerciseDetails(@PathVariable("exerciseId")long exerciseId, @PathVariable("exerciseRecordId")long exerciseRecordId, HttpServletRequest request) {
+		exerciseRecordService.deleteExerciseRecordById(exerciseRecordId, request);
 		return "redirect:../../exerciseDetails/" + exerciseId;
 	}
 	

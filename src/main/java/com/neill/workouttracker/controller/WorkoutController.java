@@ -44,15 +44,14 @@ public class WorkoutController {
 
 	@RequestMapping("/workouts")
 	public String listWorkouts(Model model, HttpServletRequest request) {
-		model.addAttribute("workoutList", workoutService.getAllWorkouts(request.getUserPrincipal().getName()));
+		model.addAttribute("workoutList", workoutService.getAllWorkouts(request));
 		return "workouts";
 	}
 
 	@RequestMapping("/saveWorkout")
 	public String saveWorkout(@ModelAttribute("workout") Workout workout, HttpServletRequest request) {
-		Principal principal = request.getUserPrincipal();
 		
-		workoutService.addNewWorkout(workout, principal.getName());
+		workoutService.addNewWorkout(workout, request);
 		return "redirect:/workouts";
 	}
 
@@ -64,17 +63,17 @@ public class WorkoutController {
 	}
 	
 	@RequestMapping("/workoutDetails/{id}")
-	public String showWorkoutDetails(@PathVariable("id")long id, Model model) {
+	public String showWorkoutDetails(@PathVariable("id")long id, Model model, HttpServletRequest request) {
 		
 		
-		model.addAttribute("workout", workoutService.getWorkoutById(id));
+		model.addAttribute("workout", workoutService.getWorkoutById(id, request));
 		model.addAttribute("exerciseList", exerciseService.getExerciseByWorkout(id));
 		return "workoutDetails";
 	}
 	
 	@RequestMapping("/deleteWorkout/{id}")
-	public String deleteWorkout(@PathVariable("id")long id) {
-		workoutService.deleteWorkoutById(id);
+	public String deleteWorkout(@PathVariable("id")long id, HttpServletRequest request) {
+		workoutService.deleteWorkoutById(id, request);
 		return  "redirect:/workouts";
 	}
 }
