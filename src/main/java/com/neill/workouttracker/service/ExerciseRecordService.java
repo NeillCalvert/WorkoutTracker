@@ -5,6 +5,8 @@ package com.neill.workouttracker.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.neill.workouttracker.model.ExerciseRecord;
@@ -28,16 +30,22 @@ public class ExerciseRecordService {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public List<ExerciseRecord> getAllExerciseRecordByExercise(long id) {
-		return exerciseRecordRepository.getAllExerciseRecordsForExercise(id);
+	public List<ExerciseRecord> getAllExerciseRecordsByExercise(long id, HttpServletRequest request) {
+		return exerciseRecordRepository.getAllExerciseRecordsForExercise(id, request.getUserPrincipal().getName());
 	}
 	
 	public ExerciseRecord addNewExerciseRecord(ExerciseRecord exerciseRecord) {
 		return exerciseRecordRepository.save(exerciseRecord);
 	}
 	
-	public void deleteExerciseRecordById(long id) {
-		exerciseRecordRepository.deleteById(id);
+	public ExerciseRecord getExerciseRecordById(long id, HttpServletRequest request) {
+		return exerciseRecordRepository.getOne(id, request.getUserPrincipal().getName());
+	}
+	
+	public void deleteExerciseRecordById(long id, HttpServletRequest request) {
+		if(getExerciseRecordById(id, request) != null) {
+			exerciseRecordRepository.deleteById(id);
+		}
 	}
 
 }
