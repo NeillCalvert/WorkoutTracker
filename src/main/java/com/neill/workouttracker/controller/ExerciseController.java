@@ -73,9 +73,15 @@ public class ExerciseController {
 	public String getExerciseDetails(@PathVariable("id") long id, Model model, HttpServletRequest request) {
 		Exercise exercise = exerciseService.getExerciseById(id,request);
 		List<ExerciseRecord> exerciseRecords = exerciseRecordService.getAllExerciseRecordsByExercise(id, request);
+		Double personalBestWeight = exerciseRecordService.getPersonalBestWeight(exerciseRecords);
+		Date[] exerciseDates = exerciseRecordService.getExerciseDates(exerciseRecords);
+		Double[] exerciseWeights = exerciseRecordService.getExerciseWeights(exerciseRecords);
 		
 		model.addAttribute("exercise", exercise);
 		model.addAttribute("exerciseRecordList", exerciseRecords);
+		model.addAttribute("personalBestWeight", personalBestWeight);
+		model.addAttribute("label", exerciseDates);
+		model.addAttribute("data", exerciseWeights);
 		return "exerciseDetails";
 	}
 	

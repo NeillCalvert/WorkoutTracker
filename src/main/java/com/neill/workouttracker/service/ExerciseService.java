@@ -3,6 +3,7 @@
  */
 package com.neill.workouttracker.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,4 +52,5 @@ public class ExerciseService {
 	public List<Exercise> getExerciseByWorkout(long id){
 		return exerciseRepository.getExercisesByWorkout(id);
 	}
+	
 }
