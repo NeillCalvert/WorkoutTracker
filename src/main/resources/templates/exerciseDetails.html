@@ -18,9 +18,43 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+	integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+	crossorigin="anonymous"></script>
+
+<script th:inline="javascript">
+	window.onload = function() {
+		var ctx = document.getElementById('myChart').getContext('2d');
+	    /*<![CDATA[*/
+		var xAxis = [[${label}]]
+	    var yAxis = [[${data}]]
+	    /*]]>*/
+
+		var chart = new Chart(ctx, {
+		    // The type of chart we want to create
+		    type: 'line',
+
+		    // The data for our dataset
+		    data: {
+		        labels: xAxis,
+		        datasets: [{
+		            label: 'Exercise Statistics',
+		            borderColor: '#007bff',
+		            data: yAxis
+		        }]
+		    },
+
+		    // Configuration options go here
+		    options: {}
+		});
+	}
+</script>
+
 <title>Workout Record</title>
 </head>
-<body style="background-color: rgb(40, 40, 40); font-size:200%;" class="text-white">
+<body style="background-color: rgb(40, 40, 40); font-size: 200%;"
+	class="text-white">
 	<ul style="background-color: black;" class="nav">
 		<li class="nav-item"><a class="nav-link active"
 			th:href="@{/workouts}">Workouts</a></li>
@@ -30,8 +64,7 @@
 	<div class="container-fluid">
 		<div align="center">
 			<h1>Workout Records</h1>
-			<br /> 
-			<br />
+			<br /> <br />
 			<table border="1" cellpadding="10" class="table table-dark">
 				<thead>
 					<tr>
@@ -50,10 +83,14 @@
 					</tr>
 				</tbody>
 			</table>
-			<br>
-			<a class="float-right btn btn-primary btn-lg" th:href="@{../workoutDetails/{id}(id=${exercise.workout.workoutId})}">Back</a>
+			<br> <a class="float-right btn btn-primary btn-lg"
+				th:href="@{../workoutDetails/{id}(id=${exercise.workout.workoutId})}">Back</a>
 			<br>
 			<h1>Exercise Stats</h1>
+			<br>
+			<h2>
+				Personal Best: <span th:text="${personalBestWeight}"></span>kg
+			</h2>
 			<br>
 			<table border="1" cellpadding="10" class="table table-dark">
 				<thead>
@@ -77,6 +114,8 @@
 					</tr>
 				</tbody>
 			</table>
+			<br>
+			<canvas id="myChart"></canvas>
 		</div>
 	</div>
 </body>
